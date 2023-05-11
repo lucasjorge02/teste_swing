@@ -15,34 +15,29 @@ import org.springframework.jdbc.core.JdbcTemplate;
  */
 public class ConexaoLocal {
 
-  private JdbcTemplate connection;
+    private JdbcTemplate connection;
 
-  public ConexaoLocal() {
+    public ConexaoLocal() {
 
-    BasicDataSource dataSource = new BasicDataSource();
-    
-    // Procurar na internet o c driver da Azure
-    dataSource​.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        BasicDataSource dataSource = new BasicDataSource();
 
-    //Colocar o caminho até o banco de dados Local
-    dataSource​.setUrl("jdbc:mysql://localhost:3306/erroreagle?autoReconnect=true&useSSL=false");
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/erroreagle?autoReconnect=true&useSSL=false");
+        dataSource.setUsername("root");
+        dataSource.setPassword("urubu100");
 
-    dataSource​.setUsername("ubuntu");
+        this.connection = new JdbcTemplate(dataSource);
 
-    dataSource​.setPassword("urubu100");
+    }
 
-    this.connection = new JdbcTemplate(dataSource);
-    
-  }
+    public JdbcTemplate getConnection() {
 
-  public JdbcTemplate getConnection() {
+        return connection;
 
-    return connection;
+    }
 
-  }
-  
-  public Boolean testeConexao(){
-     try {
+    public Boolean testeConexao() {
+        try {
             connection.execute("Select * from Admin");
             return true;
         } catch (Exception e) {
